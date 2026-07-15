@@ -272,6 +272,6 @@ What you need before writing a single line is the arithmetic every allocator sta
 
 <div align="center">
 
-**[← Chapter 1](./01-memory-anatomy.md)** · **[Table of Contents](./README.md)** · **[Chapter 3 → Alignment and Pointer Arithmetic](./03-alignment.md)**
+**[← Chapter 1](./01-memory-anatomy.md)** · **[Table of Contents](../README.md)** · **[Chapter 3 → Alignment and Pointer Arithmetic](./03-alignment.md)**
 
 </div>

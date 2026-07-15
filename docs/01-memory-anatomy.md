@@ -316,6 +316,6 @@ The work ahead is to build structures with **the speed of the stack** and **the 
 
 <div align="center">
 
-**[← Table of Contents](./README.md)** · **[Chapter 2 → How C++ Reaches Memory](./02-cpp-and-memory.md)**
+**[← Table of Contents](../README.md)** · **[Chapter 2 → How C++ Reaches Memory](./02-cpp-and-memory.md)**
 
 </div>

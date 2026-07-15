@@ -440,6 +440,6 @@ When all six pass, on both blocks, you have written a working allocator — and 
 
 <div align="center">
 
-**[← Chapter 2](./02-cpp-and-memory.md)** · **[Table of Contents](./README.md)** · *Chapter 4 — The Linear Allocator (in progress)*
+**[← Chapter 2](./02-cpp-and-memory.md)** · **[Table of Contents](../README.md)** · *Chapter 4 — The Linear Allocator (in progress)*
 
 </div>

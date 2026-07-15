@@ -31,9 +31,9 @@ The aim is not encyclopaedic coverage. It is a **direct line** from *how memory 
 
 | # | Chapter | What it answers | Status |
 |:--:|---|---|:--:|
-| **1** | [**Anatomy of a Process's Memory**](./01-memory-anatomy.md) | Where does my data actually live? | ✅ |
-| **2** | [**How C++ Reaches Memory**](./02-cpp-and-memory.md) | Who puts it there — and what are `malloc` and `new`, really? | ✅ |
-| **3** | [**Alignment and Pointer Arithmetic**](./03-alignment.md) | The arithmetic every allocator is built on. | ✅ |
+| **1** | [**Anatomy of a Process's Memory**](docs/01-memory-anatomy.md) | Where does my data actually live? | ✅ |
+| **2** | [**How C++ Reaches Memory**](docs/02-cpp-and-memory.md) | Who puts it there — and what are `malloc` and `new`, really? | ✅ |
+| **3** | [**Alignment and Pointer Arithmetic**](docs/03-alignment.md) | The arithmetic every allocator is built on. | ✅ |
 
 ### Part II — The Allocators
 
@@ -80,6 +80,6 @@ This study draws on a small number of texts, each selected for what the others d
 
 <div align="center">
 
-**[Begin with Chapter 1 →](./01-memory-anatomy.md)**
+**[Begin with Chapter 1 →](docs/01-memory-anatomy.md)**
 
 </div>
