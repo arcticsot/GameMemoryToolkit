@@ -54,7 +54,7 @@ The remaining sections take them in order.
 When you run `./game`, the shell issues the **`execve`** system call. From that moment, the **kernel loader** takes charge. It:
 
 1. **Reads the executable header** — ELF on Linux, PE on Windows — which contains the map of segments.
-2. **Maps** `.text` and `.data` *directly from the file on disk* into the address space. It does not eagerly copy everything into RAM; pages arrive on demand. (Chapter 3.)
+2. **Maps** `.text` and `.data` *directly from the file on disk* into the address space. It does not eagerly copy everything into RAM; pages arrive on demand. (Chapter 8.)
 3. **Sets permissions** on each region: `.text` becomes read-execute, `.rodata` read-only, `.data` and `.bss` read-write.
 
 This is the mechanism behind every guarantee in Chapter 1. The text segment is unwritable not by convention but because the loader marked those pages read-only, and the MMU enforces it in hardware.
@@ -235,7 +235,11 @@ Our allocators are the same idea, **specialized**. `malloc` must serve a browser
 
 **That surplus knowledge is the entire performance advantage.** Not cleverness — knowledge.
 
-What remains is to learn how libc obtains raw memory from the kernel in the first place, since we will need to do the same. That is `mmap`, `VirtualAlloc`, and the virtual memory system beneath them: **Chapter 3**.
+One question is still open: how does libc obtain raw memory from the kernel in the first place? That is `mmap`, `VirtualAlloc`, and the virtual memory system beneath them — and it waits until **Part III (Chapter 8)**, deliberately.
+
+The deferral is deliberate. Your first allocator does not need the kernel: a single `malloc` will hand you the large block, and everything interesting happens after that. Raw kernel pages are an *upgrade*, and you will appreciate the upgrade far more once you have felt the limitation.
+
+What you need before writing a single line is the arithmetic every allocator stands on — how to round an address up to a boundary, and how to do it legally in C++. That is **Chapter 3**, and it is the last thing between you and the code.
 
 ---
 
@@ -268,6 +272,6 @@ What remains is to learn how libc obtains raw memory from the kernel in the firs
 
 <div align="center">
 
-**[← Chapter 1](./01-memory-anatomy.md)** · **[Table of Contents](./README.md)** · **[Chapter 3 → Virtual Memory and the OS](./03-virtual-memory.md)**
+**[← Chapter 1](./01-memory-anatomy.md)** · **[Table of Contents](./README.md)** · **[Chapter 3 → Alignment and Pointer Arithmetic](./03-alignment.md)**
 
 </div>

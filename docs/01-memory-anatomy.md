@@ -15,7 +15,7 @@
 
 When you launch an executable, the operating system does not scatter your data randomly across RAM. It builds a **virtual address space** for the process: an ordered range of addresses, starting at `0x0`, which the program sees as private and entirely its own.
 
-Two facts to fix now; the rest belongs to Chapter 3.
+Two facts to fix now; the rest belongs to Chapter 8, where we meet the virtual memory system properly.
 
 1. The addresses you print from a pointer (`0x5f8a...`) are **virtual**, not physical. Your program never touches RAM directly.
 2. The space is divided into **segments** with distinct permissions (read, write, execute). Violating a permission means the kernel terminates the process — the familiar *segmentation fault*.
@@ -57,7 +57,7 @@ The stack descends, the heap ascends. The obvious question: **do they collide?**
 - On **x86-64**, usable virtual addresses are **48 bits wide**, giving roughly **128 TB** of user address space. The gap in the middle is an abyss tens of terabytes across. Your program will exhaust physical RAM, or fail due to fragmentation, long before the stack and the heap come anywhere near one another.
 
 > [!IMPORTANT]
-> The practical consequence is not a footnote — it is a design opportunity. On 64-bit systems, **virtual addresses are essentially free**. You can *reserve* absurd quantities of address space without consuming a single byte of physical RAM. Modern engine allocators are built on precisely this trick, and we will use it in Chapter 3.
+> The practical consequence is not a footnote — it is a design opportunity. On 64-bit systems, **virtual addresses are essentially free**. You can *reserve* absurd quantities of address space without consuming a single byte of physical RAM. Modern engine allocators are built on precisely this trick, and we will use it in Chapter 8.
 
 > [!NOTE]
 > **On ASLR.** The map above describes the *relative order* of the segments, not fixed addresses. Modern systems employ **Address Space Layout Randomization**: the base positions of the stack, the heap, and shared libraries are randomized on every run, as a defence against exploits. This is why printing the same pointer across two runs yields two different addresses.
@@ -218,7 +218,7 @@ For a game, unpredictability is worse than slowness. A consistently slow operati
 
 Continually allocating and freeing objects of varying sizes — explosion particles, projectiles, temporary buffers — leaves the heap resembling Swiss cheese: full of free holes that are **not contiguous**. You may have 50 MB free in total and still **fail** to allocate a 10 MB asset, because no single contiguous hole is large enough.
 
-This is *external fragmentation*; Chapter 4 treats it formally.
+This is *external fragmentation*; Chapter 3 treats it formally.
 
 ### The hidden costs: metadata and alignment
 
@@ -232,7 +232,7 @@ Both waste memory, but not in the same way — and the distinction matters, beca
 - **Alignment** produces **internal fragmentation**: padding bytes left *empty* inside your block, so that the next one begins on a valid boundary. You eliminate it by knowing the alignment your objects actually require.
 - **Metadata** is **allocator overhead**: bytes that are not empty at all, but occupied by the allocator's own bookkeeping. You eliminate it by not needing a header — which is possible only when the size is known in advance.
 
-Both are *internal* in the sense that the waste lies within the allocated block, as opposed to the Swiss cheese above, which is *external* fragmentation between blocks. Chapter 4 treats all three formally.
+Both are *internal* in the sense that the waste lies within the allocated block, as opposed to the Swiss cheese above, which is *external* fragmentation between blocks. Chapter 3 treats all three formally.
 
 > [!NOTE]
 > Conventions differ across the literature. CS:APP defines internal fragmentation as the gap between the size of the allocated *block* and the size of the *payload* — a definition under which the header counts as internal fragmentation. Operating-systems texts more often reserve the term for padding alone and classify metadata separately as overhead. The distinction drawn above is the one that is useful to us, because it maps onto two different fixes; do not be surprised to meet the other.
@@ -243,7 +243,7 @@ Your allocators, by contrast, **know**. A pool allocator for projectiles knows t
 
 There is a third effect, silent and lethal. `malloc` returns blocks **scattered** across RAM. The CPU does not read memory byte by byte; it reads in blocks called **cache lines**. Scattered data means continuous **cache misses** — the CPU stalling, waiting for RAM.
 
-This, beneath everything else, is the real reason AAA studios forbid `new` inside the game loop. Chapter 4 treats cache locality properly.[^drepper]
+This, beneath everything else, is the real reason AAA studios forbid `new` inside the game loop. Chapter 3 treats cache locality properly.[^drepper]
 
 > [!TIP]
 > **Portability (x86-64 / ARM64).** A cache line is **64 bytes** on x86-64 and on most ARM64 chips — but **128 bytes on Apple Silicon**. Do not hard-code `64`. C++17 provides `std::hardware_destructive_interference_size`. A full table of per-platform constants appears in the Appendix.
